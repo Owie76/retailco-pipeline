@@ -22,3 +22,7 @@ Built with Airflow, PostgreSQL, dbt, dlt, and Docker.
 ### Warehouse ERD
 
 ![Warehouse ERD](docs/erd.png)
+
+### Architecture Diagram
+
+![Architecture Diagram](docs/architecture_diagram.png)
