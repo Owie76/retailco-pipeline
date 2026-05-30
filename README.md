@@ -18,3 +18,7 @@ Built with Airflow, PostgreSQL, dbt, dlt, and Docker.
 
 > **\* fct_order_lifecycle** has four separate foreign keys to `dim_date`:
 > `ordered_date_key`, `paid_date_key`, `shipped_date_key`, `delivered_date_key`
+
+### Warehouse ERD
+
+![Warehouse ERD](docs/erd.png)
