@@ -1,0 +1,27 @@
+# Environment variables - never commit these
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# dbt
+target/
+dbt_packages/
+logs/
+
+# Airflow
+airflow/logs/
+airflow/plugins/
+
+# OS files
+.DS_Store
+Thumbs.db
