@@ -1,0 +1,163 @@
+
+services:
+
+  # ─── Lake Database ───
+  lake_db:
+    image: postgres:15
+    container_name: retailco_lake
+    environment:
+      POSTGRES_DB: lake
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - lake_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Warehouse Database ───
+  warehouse_db:
+    image: postgres:15
+    container_name: retailco_warehouse
+    environment:
+      POSTGRES_DB: warehouse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5434:5432"
+    volumes:
+      - warehouse_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Airflow Database (internal use by Airflow) ───
+  airflow_db:
+    image: postgres:15
+    container_name: retailco_airflow_db
+    environment:
+      POSTGRES_DB: airflow
+      POSTGRES_USER: airflow
+      POSTGRES_PASSWORD: airflow
+    volumes:
+      - airflow_db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U airflow"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ─── Airflow Webserver ───
+  airflow_webserver:
+    image: apache/airflow:2.9.1
+    container_name: retailco_airflow_webserver
+    depends_on:
+      airflow_db:
+        condition: service_healthy
+      lake_db:
+        condition: service_healthy
+      warehouse_db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow_db/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+      # ERP API
+      ERP_API_KEY: ${ERP_API_KEY}
+      ERP_BASE_URL: ${ERP_BASE_URL}
+      # Lake DB
+      LAKE_DB_HOST: lake_db
+      LAKE_DB_PORT: 5432
+      LAKE_DB_NAME: lake
+      LAKE_DB_USER: postgres
+      LAKE_DB_PASSWORD: postgres
+      # Warehouse DB
+      WAREHOUSE_DB_HOST: warehouse_db
+      WAREHOUSE_DB_PORT: 5432
+      WAREHOUSE_DB_NAME: warehouse
+      WAREHOUSE_DB_USER: postgres
+      WAREHOUSE_DB_PASSWORD: postgres
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./extractor:/opt/airflow/extractor
+      - airflow_logs:/opt/airflow/logs
+    ports:
+      - "8080:8080"
+    command: webserver
+    restart: always
+
+  # ─── Airflow Scheduler ───
+  airflow_scheduler:
+    image: apache/airflow:2.9.1
+    container_name: retailco_airflow_scheduler
+    depends_on:
+      airflow_db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow_db/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      # ERP API
+      ERP_API_KEY: ${ERP_API_KEY}
+      ERP_BASE_URL: ${ERP_BASE_URL}
+      # Lake DB
+      LAKE_DB_HOST: lake_db
+      LAKE_DB_PORT: 5432
+      LAKE_DB_NAME: lake
+      LAKE_DB_USER: postgres
+      LAKE_DB_PASSWORD: postgres
+      # Warehouse DB
+      WAREHOUSE_DB_HOST: warehouse_db
+      WAREHOUSE_DB_PORT: 5432
+      WAREHOUSE_DB_NAME: warehouse
+      WAREHOUSE_DB_USER: postgres
+      WAREHOUSE_DB_PASSWORD: postgres
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./extractor:/opt/airflow/extractor
+      - airflow_logs:/opt/airflow/logs
+    command: scheduler
+    restart: always
+
+  # ─── Airflow Init (runs once to set up the DB) ───
+  airflow_init:
+    image: apache/airflow:2.9.1
+    container_name: retailco_airflow_init
+    depends_on:
+      airflow_db:
+        condition: service_healthy
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@airflow_db/airflow
+      AIRFLOW__CORE__FERNET_KEY: ''
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    command: >
+      bash -c "
+        airflow db init &&
+        airflow users create
+          --username admin
+          --password admin
+          --firstname Admin
+          --lastname User
+          --role Admin
+          --email admin@retailco.com
+      "
+    restart: on-failure
+
+# ─── Volumes ───
+volumes:
+  lake_data:
+  warehouse_data:
+  airflow_db_data:
+  airflow_logs:
