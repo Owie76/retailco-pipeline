@@ -90,6 +90,7 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./extractor:/opt/airflow/extractor
       - ./dlt:/opt/airflow/dlt
+      - ./dbt:/opt/airflow/dbt
       - airflow_logs:/opt/airflow/logs
     ports:
       - "8080:8080"
@@ -128,6 +129,7 @@ services:
       - ./airflow/dags:/opt/airflow/dags
       - ./extractor:/opt/airflow/extractor
       - ./dlt:/opt/airflow/dlt
+      - ./dbt:/opt/airflow/dbt
       - airflow_logs:/opt/airflow/logs
     command: scheduler
     restart: always

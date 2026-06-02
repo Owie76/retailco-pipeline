@@ -3,8 +3,8 @@ retailco:
   outputs:
     dev:
       type: postgres
-      host: "{{ env_var('WAREHOUSE_DB_HOST', 'localhost') }}"
-      port: "{{ env_var('WAREHOUSE_DB_PORT', '5434') | int }}"
+      host: warehouse_db
+      port: 5432
       dbname: warehouse
       user: postgres
       password: postgres
