@@ -1,0 +1,89 @@
+version: 2
+
+sources:
+  - name: raw
+    database: warehouse
+    schema: raw
+    tables:
+      - name: stores
+      - name: employees
+      - name: payment_methods
+      - name: customers
+      - name: products
+      - name: orders
+      - name: order_items
+      - name: payments
+      - name: inventory_movements
+
+models:
+  - name: stg_stores
+    description: "Cleaned stores data"
+    columns:
+      - name: store_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_employees
+    description: "Cleaned employees data"
+    columns:
+      - name: employee_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_payment_methods
+    description: "Cleaned payment methods data"
+    columns:
+      - name: payment_method_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_customers
+    description: "Cleaned customers data"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_products
+    description: "Cleaned products data"
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_orders
+    description: "Cleaned orders data"
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_order_items
+    description: "Cleaned order items data"
+    columns:
+      - name: order_item_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_payments
+    description: "Cleaned payments data"
+    columns:
+      - name: payment_id
+        tests:
+          - not_null
+          - unique
+
+  - name: stg_inventory_movements
+    description: "Cleaned inventory movements data"
+    columns:
+      - name: movement_id
+        tests:
+          - not_null
+          - unique
