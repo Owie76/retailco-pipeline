@@ -21,6 +21,7 @@ A modern end-to-end data pipeline for RetailCo, a Nigerian retail chain with sto
 ## Architecture
 
 The pipeline follows a modern data stack architecture with four layers:
+
 ERP REST API → Lake (PostgreSQL) → Warehouse (PostgreSQL) → Marts (dbt)
 
 All services are containerised with Docker and orchestrated by Apache Airflow.
