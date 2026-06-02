@@ -280,34 +280,35 @@ ORDER BY order_count DESC;
 ---
 
 ## Project Structure
-retailco-pipeline/
-├── airflow/
-│   └── dags/
-│       ├── extract_dag.py          # Extract DAG (Checkpoint 2)
-│       ├── load_dag.py             # Load DAG (Checkpoint 3)
-│       └── retailco_pipeline.py    # Master pipeline DAG (Checkpoint 5)
-├── dbt/
-│   ├── models/
-│   │   ├── staging/                # 9 staging models
-│   │   └── marts/
-│   │       ├── dimensions/         # 6 dimension tables
-│   │       └── facts/              # 4 fact tables + flagged_payments
-│   ├── snapshots/                  # SCD2 snapshots
-│   ├── seeds/                      # dim_date seed
-│   ├── dbt_project.yml
-│   └── profiles.yml
-├── dlt/
-│   └── pipeline.py                 # dlt load pipeline
-├── extractor/
-│   └── extract.py                  # Python ERP extractor
-├── docs/
-│   ├── bus_matrix.xlsx
-│   ├── erd.png
-│   └── architecture_diagram.png
-├── docker-compose.yml
-├── .env                            # Never committed
-├── .gitignore
-└── README.md
+
+    retailco-pipeline/
+    ├── airflow/
+    │   └── dags/
+    │       ├── extract_dag.py
+    │       ├── load_dag.py
+    │       └── retailco_pipeline.py
+    ├── dbt/
+    │   ├── models/
+    │   │   ├── staging/
+    │   │   └── marts/
+    │   │       ├── dimensions/
+    │   │       └── facts/
+    │   ├── snapshots/
+    │   ├── seeds/
+    │   ├── dbt_project.yml
+    │   └── profiles.yml
+    ├── dlt/
+    │   └── pipeline.py
+    ├── extractor/
+    │   └── extract.py
+    ├── docs/
+    │   ├── bus_matrix.xlsx
+    │   ├── erd.png
+    │   └── architecture_diagram.png
+    ├── docker-compose.yml
+    ├── .env
+    ├── .gitignore
+    └── README.md
 ---
 
 ## Data Quality
