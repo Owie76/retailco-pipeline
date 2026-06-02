@@ -36,7 +36,7 @@ All services are containerised with Docker and orchestrated by Apache Airflow.
 | **fct_sales** | ✓ | ✓ | ✓ | ✓ | ✓ | ✗ |
 | **fct_payments** | ✓ | ✓ | ✗ | ✓ | ✗ | ✓ |
 | **fct_inventory_daily** | ✓ | ✗ | ✓ | ✓ | ✗ | ✗ |
-| **fct_order_lifecycle** | ✓* | ✓ | ✗ | ✓ | ✓ | ✗ |
+| **fct_order_lifecycle** | ✓*4 | ✓ | ✗ | ✓ | ✓ | ✗ |
 
 > **\* fct_order_lifecycle** has four separate foreign keys to `dim_date`:
 > `ordered_date_key`, `paid_date_key`, `shipped_date_key`, `delivered_date_key`
