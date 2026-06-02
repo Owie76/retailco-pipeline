@@ -18,7 +18,7 @@ RetailCo generated strong revenue across all four store locations, with relative
 
 From a category perspective, **Sports** is the top revenue driver at ₦8.87 billion, followed by **Home & Garden** (₦8.75 billion) and **Books & Media** (₦8.72 billion). These three categories are remarkably close in performance, suggesting broad, diversified demand rather than concentration in a single category.
 
-Monthly revenue trends show **August 2025** as the strongest month (₦2.81 billion), followed by **March 2025** (₦2.78 billion) and **March 2026** (₦2.78 billion). The consistency of March across two consecutive years suggests a seasonal pattern — possibly driven by post-New Year spending or school resumption cycles common in Nigeria.
+Monthly revenue trends show **August 2025** as the strongest month (₦2.81 billion), followed by **March 2025** (₦2.78 billion) and **March 2026** (₦2.78 billion). The consistency of March across two consecutive years suggests a seasonal pattern, possibly driven by post-New Year spending or school resumption cycles common in Nigeria.
 
 **Recommendation:** Invest in inventory and marketing for August and March, as these months consistently deliver peak revenue.
 
@@ -28,7 +28,7 @@ Monthly revenue trends show **August 2025** as the strongest month (₦2.81 bill
 
 **How often do customers purchase, what is their average order value, and how do segments differ?**
 
-RetailCo serves four distinct customer segments — retail, wholesale, VIP, and corporate — with relatively balanced distribution across all four.
+RetailCo serves four distinct customer segments, which are; retail, wholesale, VIP, and corporate, with relatively balanced distribution across all four.
 
 | Segment | Customer Count | Avg Order Value |
 |---------|---------------|----------------|
@@ -37,9 +37,9 @@ RetailCo serves four distinct customer segments — retail, wholesale, VIP, and 
 | Retail | 1,272 | ₦188,697 |
 | Wholesale | 1,253 | ₦188,480 |
 
-Notably, average order values are nearly identical across all segments — ranging from ₦188,480 to ₦189,419 — a difference of less than 0.5%. This suggests that RetailCo's pricing and product mix does not meaningfully differentiate between segment types, which may be an opportunity to develop segment-specific offers.
+Notably, average order values are nearly identical across all segments, ranging from ₦188,480 to ₦189,419, which is a difference of less than 0.5%. This suggests that RetailCo's pricing and product mix does not meaningfully differentiate between segment types, which may be an opportunity to develop segment-specific offers.
 
-Corporate and VIP customers show marginally higher average order values, which aligns with expectations — these customers typically purchase higher-value items or in larger quantities. However, the retail segment has the highest customer count (1,272), making it the broadest base for growth.
+Corporate and VIP customers show marginally higher average order values, which aligns with expectations, as these customers typically purchase higher-value items or in larger quantities. However, the retail segment has the highest customer count (1,272), making it the broadest base for growth.
 
 **Recommendation:** Develop loyalty programmes targeting the retail segment to increase purchase frequency, and create premium bundles for VIP and corporate customers to widen the average order value gap.
 
@@ -53,7 +53,7 @@ Sports, Home & Garden, and Books & Media are the three leading categories by rev
 
 The pipeline tracks discount amounts at the order line level via `fct_sales.discount_amount`, enabling margin impact analysis. Products with high discount percentages but low net revenue contribution can be identified and reviewed for pricing strategy adjustments.
 
-The presence of **342,830 order line items** across **80,000 orders** gives an average of approximately **4.3 line items per order**, indicating customers regularly purchase multiple products per transaction — a positive signal for cross-selling opportunities.
+The presence of **342,830 order line items** across **80,000 orders** gives an average of approximately **4.3 line items per order**, indicating customers regularly purchase multiple products per transaction - a positive signal for cross-selling opportunities.
 
 **Recommendation:** Review discount policies for high-volume, low-margin products. Focus cross-selling efforts on the Sports category, which leads all categories in revenue.
 
@@ -75,11 +75,11 @@ All five payment methods show remarkably balanced usage, both in transaction cou
 
 **USSD** leads in both transaction volume and total amount, reflecting Nigeria's widespread adoption of USSD-based banking, particularly among customers who may not have smartphones or reliable internet access. **Mobile Money** follows closely, consistent with the growing fintech adoption across Nigeria.
 
-The near-equal distribution across all five channels is a positive sign — it means RetailCo is not over-dependent on any single payment method, reducing operational risk.
+The near-equal distribution across all five channels is a positive sign which indicates that RetailCo is not over-dependent on any single payment method, reducing operational risk.
 
 **Anomalies:** The pipeline flagged **2,858 anomalous payments** isolated into the `flagged_payments` table:
-- **2,166** unexplained negative amounts — payments recorded as negative without a corresponding refund status
-- **692** zero-amount payments — transactions with no value recorded
+- **2,166** unexplained negative amounts - payments recorded as negative without a corresponding refund status
+- **692** zero-amount payments - transactions with no value recorded
 
 These anomalies represent approximately **4% of all payment records** and have been excluded from revenue calculations. They warrant investigation with the finance team to determine whether they are system errors, cancelled transactions, or data entry issues.
 
